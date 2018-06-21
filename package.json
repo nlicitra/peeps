@@ -1,0 +1,19 @@
+{
+  "name": "peeps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "matter-js": "^0.14.2",
+    "parcel": "^1.9.2"
+  },
+  "devDependencies": {
+    "prettier": "^1.13.5"
+  },
+  "scripts": {
+    "start": "parcel src/index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
