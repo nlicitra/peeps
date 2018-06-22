@@ -1,86 +1,93 @@
 import Matter from 'matter-js';
+import PeepPNG from '../assets/peep.png';
+console.log(PeepPNG);
 
-var Example = Example || {};
+var Engine = Matter.Engine,
+    Render = Matter.Render,
+    Runner = Matter.Runner,
+    Composites = Matter.Composites,
+    MouseConstraint = Matter.MouseConstraint,
+    Mouse = Matter.Mouse,
+    World = Matter.World,
+    Events = Matter.Events,
+    Bodies = Matter.Bodies;
 
-Example.pyramid = function() {
-    var Engine = Matter.Engine,
-        Render = Matter.Render,
-        Runner = Matter.Runner,
-        Composites = Matter.Composites,
-        MouseConstraint = Matter.MouseConstraint,
-        Mouse = Matter.Mouse,
-        World = Matter.World,
-        Bodies = Matter.Bodies;
+// create engine
+var engine = Engine.create(),
+    world = engine.world;
 
-    // create engine
-    var engine = Engine.create(),
-        world = engine.world;
+// create renderer
+var render = Render.create({
+    element: document.body,
+    engine: engine,
+    options: {
+        width: 800,
+        height: 600,
+        wireframes: false,
+        background: '#707377',
+    },
+});
 
-    // create renderer
-    var render = Render.create({
-        element: document.body,
-        engine: engine,
-        options: {
-            width: 800,
-            height: 600,
-            showAngleIndicator: true,
+Render.run(render);
+
+// create runner
+var runner = Runner.create();
+Runner.run(runner, engine);
+
+var collider = Bodies.rectangle(400, 700, 1800, 50, {
+    isSensor: true,
+    isStatic: true,
+    render: {
+        visible: false,
+    },
+});
+
+World.add(world, [collider]);
+
+// add mouse control
+var mouse = Mouse.create(render.canvas),
+    mouseConstraint = MouseConstraint.create(engine, {
+        mouse: mouse,
+        constraint: {
+            stiffness: 0.2,
+            render: {
+                visible: false,
+            },
         },
     });
 
-    Render.run(render);
+World.add(world, mouseConstraint);
 
-    // create runner
-    var runner = Runner.create();
-    Runner.run(runner, engine);
-
-    // add bodies
-    var stack = Composites.pyramid(100, 258, 15, 10, 0, 0, function(x, y) {
-        return Bodies.circle(x, y, 40, 40);
-    });
-
-    World.add(world, [
-        stack,
-        // walls
-        Bodies.rectangle(400, 0, 800, 50, {isStatic: true}),
-        Bodies.rectangle(800, 300, 50, 600, {isStatic: true}),
-        Bodies.rectangle(0, 300, 50, 600, {isStatic: true}),
-        Bodies.rectangle(400, 605, 800, 50, {isStatic: true}),
-    ]);
-
-    // add mouse control
-    var mouse = Mouse.create(render.canvas),
-        mouseConstraint = MouseConstraint.create(engine, {
-            mouse: mouse,
-            constraint: {
-                stiffness: 0.2,
-                render: {
-                    visible: false,
+Events.on(engine, 'afterUpdate', function() {
+    if (mouseConstraint.mouse.button === 0) {
+        const {x, y} = mouseConstraint.mouse.position;
+        const peep = Bodies.circle(x, y, 25, {
+            render: {
+                sprite: {
+                    texture: './peep.40345789.png',
                 },
             },
         });
+        World.add(engine.world, peep);
+    }
+});
 
-    World.add(world, mouseConstraint);
-
-    // keep the mouse in sync with rendering
-    render.mouse = mouse;
-
-    // fit the render viewport to the scene
-    Render.lookAt(render, {
-        min: {x: 0, y: 0},
-        max: {x: 800, y: 600},
+Events.on(engine, 'collisionStart', function(event) {
+    const {pairs} = event;
+    pairs.forEach((pair) => {
+        if (pair.bodyA === collider) {
+            World.remove(engine.world, pair.bodyB);
+        } else if (pair.bodyB === collider) {
+            World.remove(engine.world, pair.bodyA);
+        }
     });
+});
 
-    // context for MatterTools.Demo
-    return {
-        engine: engine,
-        runner: runner,
-        render: render,
-        canvas: render.canvas,
-        stop: function() {
-            Matter.Render.stop(render);
-            Matter.Runner.stop(runner);
-        },
-    };
-};
+// keep the mouse in sync with rendering
+render.mouse = mouse;
 
-Example.pyramid();
+// fit the render viewport to the scene
+Render.lookAt(render, {
+    min: {x: 0, y: 0},
+    max: {x: 800, y: 600},
+});
