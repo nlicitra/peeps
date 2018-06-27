@@ -8,23 +8,31 @@ const renderer = new Renderer();
 
 const stream = new AudioStream(PeepsMP3);
 
+setTimeout(() => {
+    const logos = document.querySelector('.logos-container');
+    logos.addEventListener('click', () => {
+        stream.toggle();
+    });
+}, 0);
+
 stream.makeBand('low', {
-    highPass: 40,
-    lowPass: 50,
-    callback: () => {},
+    highPass: 200,
+    lowPass: 150,
+    callback: () => {
+        renderer.burst(BurgerPNG);
+        renderer.burst(BurgerPNG);
+        renderer.burst(BurgerPNG);
+        renderer.burst(BurgerPNG);
+    },
 });
 stream.makeBand('mid', {
     highPass: 1000,
     lowPass: 2000,
     threshold: 200,
     callback: () => {
-        renderer.burst(BurgerPNG);
         renderer.burst(PeepPNG);
-        renderer.burst(BurgerPNG);
         renderer.burst(PeepPNG);
-        renderer.burst(BurgerPNG);
         renderer.burst(PeepPNG);
-        renderer.burst(BurgerPNG);
         renderer.burst(PeepPNG);
     },
 });

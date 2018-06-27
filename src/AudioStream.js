@@ -1,10 +1,10 @@
 import AudioBand from './AudioBand';
 
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+
 export default class AudioStream {
     constructor(src) {
         this.ctx = new AudioContext();
-        const offlineCtx = new OfflineAudioContext(2, 44100 * 40, 44100);
-        const bufferSource = offlineCtx.createBufferSource();
 
         this.audio = new Audio();
         this.audio.autoplay = false;
