@@ -8,6 +8,7 @@
     "parcel": "^1.9.2"
   },
   "devDependencies": {
+    "lodash": "^4.17.10",
     "prettier": "^1.13.5"
   },
   "scripts": {
