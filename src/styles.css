@@ -3,5 +3,7 @@
     bottom: 1em;
     right: 1em;
     display: flex;
-    align-items: right;
+    align-items: center;
+    justify-content: flex-end;
+    width: 20em;
 }

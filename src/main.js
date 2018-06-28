@@ -14,7 +14,7 @@ setTimeout(() => {
         event.preventDefault();
         stream.toggle();
     });
-    logos.addEventListener('click', () => {
+    logos.addEventListener('click', (event) => {
         event.preventDefault();
         stream.toggle();
     });
