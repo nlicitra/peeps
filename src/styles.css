@@ -1,9 +1,15 @@
 .logos-container {
     position: absolute;
-    bottom: 1em;
-    right: 1em;
+    bottom: 0;
+    right: 0;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     width: 20em;
+    margin-bottom: 1em;
+}
+
+canvas {
+    width: 100vw;
+    height: 100vh;
 }
