@@ -14,8 +14,6 @@ const Peep = isMobile ? PeepPNGSmall : PeepPNG;
 
 const renderer = new Renderer();
 
-let count = 5
-
 const initAudio = () => {
     const stream = new AudioStream(PeepsMP3);
     stream.makeBand('low', {
@@ -24,7 +22,7 @@ const initAudio = () => {
         callback: () => {
             if (visible) {
                 if (isMobile) {
-                    renderer.spawn(Burger, count);
+                    renderer.spawn(Burger, 1);
                 } else {
                     renderer.burst(Burger, isMobile);
                     renderer.burst(Burger, isMobile);
@@ -40,7 +38,7 @@ const initAudio = () => {
         callback: () => {
             if (visible) {
                 if (isMobile) {
-                    renderer.spawn(Peep, count);
+                    renderer.spawn(Peep, 2);
                 } else {
                     renderer.burst(Peep, isMobile);
                     renderer.burst(Peep, isMobile);
@@ -73,9 +71,6 @@ setTimeout(() => {
             setTimeout(() => {
                 instructions.remove();
                 stream.toggle();
-                setTimeout(() => {
-                    count = 10;
-                }, 60000);
             }, 3000)
             instructions.classList += " fade-out";
         });
