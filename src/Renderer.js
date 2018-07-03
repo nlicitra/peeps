@@ -110,6 +110,15 @@ export default class Renderer {
         });
     }
 
+    spawn(url, count) {
+        for (let i = 0; i < count; i++) {
+            const x = Math.random() * (WIDTH - 20) + 10;
+            const y = Math.random() * (HEIGHT - 20) + 10;
+            const obj = this.createObj(url, x, y, 10);
+            Matter.World.add(this.engine.world, obj);
+        }
+    }
+
     burst(url, isMobile) {
         const radius = isMobile ? 10 : 25;
         const magnitude = isMobile ? 0.01 : 0.1;
