@@ -100,8 +100,8 @@ export default class Renderer {
         this.engine = engine;
     }
 
-    createObj(url, x, y) {
-        return Matter.Bodies.circle(x, y, 25, {
+    createObj(url, x, y, radius) {
+        return Matter.Bodies.circle(x, y, radius, {
             render: {
                 sprite: {
                     texture: `.${url}`,
@@ -110,20 +110,31 @@ export default class Renderer {
         });
     }
 
-    burst(url) {
+    burst(url, isMobile) {
+        const radius = isMobile ? 10 : 25;
+        const magnitude = isMobile ? 0.01 : 0.1;
         const x = Math.random() * (WIDTH - 100) + 50;
         const y = Math.random() * (HEIGHT - 100) + 50;
-        let obj = this.createObj(url, x + 25, y + 25);
-        Matter.Body.applyForce(obj, obj.position, {x: 0.1, y: 0.1});
+        let obj = this.createObj(url, x + radius, y + radius, radius);
+        Matter.Body.applyForce(obj, obj.position, {x: magnitude, y: magnitude});
         Matter.World.add(this.engine.world, obj);
-        obj = this.createObj(url, x + 25, y - 25);
-        Matter.Body.applyForce(obj, obj.position, {x: 0.1, y: -0.1});
+        obj = this.createObj(url, x + radius, y - radius, radius);
+        Matter.Body.applyForce(obj, obj.position, {
+            x: magnitude,
+            y: -magnitude,
+        });
         Matter.World.add(this.engine.world, obj);
-        obj = this.createObj(url, x - 25, y - 25);
-        Matter.Body.applyForce(obj, obj.position, {x: -0.1, y: -0.1});
+        obj = this.createObj(url, x - radius, y - radius, radius);
+        Matter.Body.applyForce(obj, obj.position, {
+            x: -magnitude,
+            y: -magnitude,
+        });
         Matter.World.add(this.engine.world, obj);
-        obj = this.createObj(url, x - 25, y + 25);
-        Matter.Body.applyForce(obj, obj.position, {x: -0.1, y: +0.1});
+        obj = this.createObj(url, x - radius, y + radius, radius);
+        Matter.Body.applyForce(obj, obj.position, {
+            x: -magnitude,
+            y: magnitude,
+        });
         Matter.World.add(this.engine.world, obj);
     }
 
