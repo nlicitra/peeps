@@ -17,3 +17,25 @@ canvas {
 body {
     background: #73FFF1;
 }
+
+.instructions {
+    position: absolute;
+    justify-content: center;
+    width: 100%;
+    top: 40vh;
+    display: flex;
+    align-items: center;
+    font-family: sans-serif;
+    text-align: center;
+    font-size: 2em;
+
+    -webkit-transition: opacity 3s ease-in-out;
+    -moz-transition: opacity 3s ease-in-out;
+    -ms-transition: opacity 3s ease-in-out;
+    -o-transition: opacity 3s ease-in-out;
+    opacity: 1;
+}
+
+.instructions.fade-out {
+    opacity: 0;
+}

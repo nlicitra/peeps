@@ -49,22 +49,32 @@ const initAudio = () => {
 };
 
 let stream = null;
+const initialLoad = true;
 
 setTimeout(() => {
     const canvas = document.querySelector('canvas');
+    const instructions = document.querySelector('.instructions');
     if (isMobile) {
-        canvas.addEventListener('touchstart', (event) => {
+        instructions.addEventListener('touchstart', (event) => {
             event.preventDefault();
             if (!stream) {
                 stream = initAudio();
             }
-            stream.toggle();
+            setTimeout(() => {
+                instructions.remove();
+                stream.toggle();
+            }, 3000)
+            instructions.classList += " fade-out";
         });
     } else {
         stream = initAudio();
-        canvas.addEventListener('click', (event) => {
+        instructions.addEventListener('click', (event) => {
             event.preventDefault();
-            stream.toggle();
+            setTimeout(() => {
+                instructions.remove();
+                stream.toggle();
+            }, 3000)
+            instructions.classList += " fade-out";
         });
     }
 }, 0);
