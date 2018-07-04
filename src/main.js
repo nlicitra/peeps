@@ -22,7 +22,7 @@ const initAudio = () => {
         callback: () => {
             if (visible) {
                 if (isMobile) {
-                    renderer.spawn(Burger, 1);
+                    renderer.spawn(Burger, count);
                 } else {
                     renderer.burst(Burger, isMobile);
                     renderer.burst(Burger, isMobile);
@@ -38,7 +38,7 @@ const initAudio = () => {
         callback: () => {
             if (visible) {
                 if (isMobile) {
-                    renderer.spawn(Peep, 2);
+                    renderer.spawn(Peep, count);
                 } else {
                     renderer.burst(Peep, isMobile);
                     renderer.burst(Peep, isMobile);
@@ -57,7 +57,7 @@ const initAudio = () => {
 };
 
 let stream = null;
-const initialLoad = true;
+let count = 8;
 
 setTimeout(() => {
     const canvas = document.querySelector('canvas');
@@ -71,9 +71,12 @@ setTimeout(() => {
             setTimeout(() => {
                 instructions.remove();
                 stream.toggle();
+                setTimeout(() => {
+                    count = 15;
+                }, 60000)
             }, 3000)
             instructions.classList += " fade-out";
-        });
+        }, {once: true});
     } else {
         stream = initAudio();
         instructions.addEventListener('click', (event) => {
@@ -83,7 +86,7 @@ setTimeout(() => {
                 stream.toggle();
             }, 3000)
             instructions.classList += " fade-out";
-        });
+        }, {once: true});
     }
 }, 0);
 
