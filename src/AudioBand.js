@@ -4,10 +4,10 @@ const FRAME_WINDOW_SIZE = 100;
 const SLEEP_AMOUNT = 50;
 
 export default class AudioBand {
-    constructor(ctx, element, {lowPass, highPass, callback, threshold}) {
+    constructor(ctx, clip, {lowPass, highPass, callback, threshold}) {
         this.ctx = ctx;
 
-        this.element = element;
+        this.clip = clip;
 
         this.analyser = this.ctx.createAnalyser();
         this.analyser.fft = FREQ_BIN_COUNT * 2;
@@ -29,7 +29,7 @@ export default class AudioBand {
         const filteredElement = filters.reduce((chain, filter) => {
             chain.connect(filter);
             return filter;
-        }, this.element);
+        }, this.clip);
 
         filteredElement.connect(this.analyser);
         this.callback = callback || function() {};
