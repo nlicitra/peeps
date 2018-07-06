@@ -39,3 +39,16 @@ body {
 .instructions.fade-out {
     opacity: 0;
 }
+
+.instructions .text {
+    -webkit-transition: opacity 0.5s ease-in-out;
+    -moz-transition: opacity 0.5s ease-in-out;
+    -ms-transition: opacity 0.5s ease-in-out;
+    -o-transition: opacity 0.5s ease-in-out;
+    opacity: 0;
+    transition-delay: 0.5s;
+}
+
+.instructions .text.fade-in {
+    opacity: 1;
+}

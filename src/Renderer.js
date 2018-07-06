@@ -110,10 +110,10 @@ export default class Renderer {
         });
     }
 
-    spawn(url, count) {
+    spawn(url, count, _x, _y) {
         for (let i = 0; i < count; i++) {
-            const x = Math.random() * (WIDTH - 20) + 10;
-            const y = Math.random() * (HEIGHT - 20) + 10;
+            const x = _x || Math.random() * (WIDTH - 20) + 10;
+            const y = _y || Math.random() * (HEIGHT - 20) + 10;
             const obj = this.createObj(url, x, y, 10);
             Matter.World.add(this.engine.world, obj);
         }
